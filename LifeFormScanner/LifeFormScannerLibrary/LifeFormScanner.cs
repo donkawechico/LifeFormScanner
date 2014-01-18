@@ -6,6 +6,7 @@ using System.ServiceModel.Web;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Collections;
+using NetworkDevicesUtility;
 
 namespace LifeFormScannerLibrary
 {
@@ -14,9 +15,12 @@ namespace LifeFormScannerLibrary
         private LifeFormsResult GetLifeFormsWork()
         {
             LifeFormsResult result = new LifeFormsResult();
-            string rtn = "";
             List<LifeForm> lifeforms = new List<LifeForm>();
+            List<string> FoundIPs = new List<string>();
 
+           
+
+            /*
             //Dictionary<IPAddress, PhysicalAddress> all = Network.GetAllDevicesOnLAN();
             List<LifeFormScannerLibrary.Network.DeviceInfo> all = Network.GetAllDevicesOnLAN();
             //foreach (KeyValuePair<IPAddress, PhysicalAddress> kvp in all)
@@ -34,7 +38,7 @@ namespace LifeFormScannerLibrary
 
                 lifeforms.Add(temp);
             }
-
+            */
             result.LifeForms = lifeforms.ToArray();
 
             return result;
@@ -48,6 +52,13 @@ namespace LifeFormScannerLibrary
 
         }
 
+        private void DisplayList(List<string> ips)
+        {
+            foreach (string ip in ips)
+            {
+                Console.WriteLine(ip);
+            }
+        }
 
         public LifeFormsResult GetLifeForms_GETXML()
         {

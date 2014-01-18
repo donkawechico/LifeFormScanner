@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
+using System.Net.NetworkInformation;
 
-namespace LifeFormScannerLibrary
+namespace NetworkDevicesUtility
 {
     /// <summary>
     /// This class allows you to retrieve the IP Address and Host Name for a specific machine on the local network when you only know it's MAC Address.
     /// </summary>
     public class IPInfo
     {
+
         public IPInfo(string macAddress, string ipAddress)
         {
             this.MacAddress = macAddress;
@@ -58,6 +60,57 @@ namespace LifeFormScannerLibrary
             return ipinfo;
         }
 
+        public static bool PingIP(string IP)
+        {
+            bool result = false;
+            try
+            {
+                Ping ping = new Ping();
+                PingReply pingReply = ping.Send(IP, 100);
+
+                if (pingReply.Status == IPStatus.Success)
+                    result = true;
+            }
+            catch
+            {
+                result = false;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Retrieves the IPInfo for All machines on the local network.
+        /// </summary>
+        /// <returns></returns>
+        public static List<IPInfo> IPScan()
+        {
+            try
+            {
+                var list = new List<IPInfo>();
+                string ipsubnet = "192.168.1.";
+
+                for (int i = 1; i <= 255; i++)
+                {
+                    string ip = ipsubnet + i;
+                    Console.Write(ip);
+                    IPInfo temp = new IPInfo("", ip);
+                    if (IPInfo.PingIP(ip))
+                    {
+                        list.Add(temp);
+                        Console.Write(" FOUND");
+                    }
+                    Console.WriteLine();
+                }
+               
+                // Return list of IPInfo objects containing MAC / IP Address combinations
+                return list;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("IPInfo: Error Parsing 'arp -a' results", ex);
+            }
+        }
         /// <summary>
         /// Retrieves the IPInfo for All machines on the local network.
         /// </summary>

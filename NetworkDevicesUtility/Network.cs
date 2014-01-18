@@ -8,7 +8,7 @@ using System.Net.NetworkInformation;
 using System.Collections;
 using System.Security;
 
-namespace LifeFormScannerLibrary
+namespace NetworkDevicesUtility
 {
     public class Network
     {

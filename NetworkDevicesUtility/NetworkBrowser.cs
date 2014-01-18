@@ -1,15 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.DirectoryServices;
 using System.Runtime.InteropServices;
-using System.Net;
-using PcapDotNet.Core;
 using System.Security;
 using System.Collections;
 
-namespace LifeFormScannerLibrary
+namespace NetworkDevicesUtility
 {
     #region NetworkBrowser CLASS
     /// <summary>
@@ -168,10 +162,10 @@ namespace LifeFormScannerLibrary
                 int ret = NetServerEnum(null, 100, ref buffer,
                     MAX_PREFERRED_LENGTH,
                     out entriesRead,
-                    out totalEntries,
+                    out totalEntries, 
                     //SV_TYPE_WORKSTATION | 
                     //SV_TYPE_SERVER | 
-                    SV_TYPE_ALL,
+                    SV_TYPE_ALL, 
                     null, out resHandle);
                 //if the returned with a NERR_Success 
                 //(C++ term), =0 for C#
